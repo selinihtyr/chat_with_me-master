@@ -10,6 +10,11 @@ class SignIn extends StatelessWidget {
     _userViewModel.signInAnonymously();
   }
 
+  void _signInWithGoogle(BuildContext context) {
+    final _userViewModel = Provider.of<UserViewModel>(context, listen: false);
+    _userViewModel.signInWithGoogle();
+  }
+
   @override
   Widget build(BuildContext context) {
     Color primaryColor = const Color(0xff6A5BC2);
@@ -33,7 +38,7 @@ class SignIn extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
               ),
               SocialLoginButton(
-                onPressed: () {},
+                onPressed: () => _signInWithGoogle(context),
                 buttonColor: Colors.red,
                 text: 'Login With Gmail',
                 height: 50,
@@ -69,3 +74,5 @@ class SignIn extends StatelessWidget {
         ));
   }
 }
+
+

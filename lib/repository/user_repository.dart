@@ -3,7 +3,6 @@ import 'package:chat_with_me/services/auth_base.dart';
 import 'package:chat_with_me/services/fake_authentication_service.dart';
 import 'package:chat_with_me/services/firebase_auth_services.dart';
 import 'package:chat_with_me/services/locator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 enum AppMode { DEBUG, RELEASE }
 
@@ -13,6 +12,7 @@ FakeAuthenticationService _fakeAuthenticationService =
 AppMode appMode = AppMode.DEBUG;
 
 class UserRepository implements AuthBase {
+
   @override
   Future<AppUser?> currentUser() async {
     if (appMode == AppMode.DEBUG)  {
@@ -41,8 +41,11 @@ class UserRepository implements AuthBase {
   }
 
   @override
-  Future<AppUser?> signInWithGoogle() {
-    // TODO: implement signInWithGoogle
-    throw UnimplementedError();
+  Future<AppUser?> signInWithGoogle()async {
+    if (appMode == AppMode.DEBUG) {
+      return await _fakeAuthenticationService.signInWithGoogle();
+    } else {
+      return await _firebaseAuthServices.signInWithGoogle();
+    }
   }
 }

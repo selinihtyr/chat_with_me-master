@@ -68,8 +68,16 @@ class UserViewModel with ChangeNotifier implements AuthBase{
   }
 
   @override
-  Future<AppUser?> signInWithGoogle() {
-    // TODO: implement signInWithGoogle
-    throw UnimplementedError();
+  Future<AppUser?> signInWithGoogle() async {
+    try {
+      state = ViewState.BUSY;
+      _user = await _userRepository.signInWithGoogle();
+      return _user;
+    } catch (e) {
+      debugPrint("View Model Current User Hata: " + e.toString());
+      return null;
+    } finally {
+      state = ViewState.IDLE;
+    }
   }
 }

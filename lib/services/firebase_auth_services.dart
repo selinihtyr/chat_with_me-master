@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
 import '../model/user_app.dart';
 import 'auth_base.dart';
 
@@ -7,7 +9,7 @@ class FirebaseAuthServices implements AuthBase {
 
   @override
   Future<AppUser?> currentUser() async {
-    try{
+    try {
       User? user = await _firebaseAuth.currentUser;
       return _userFromFirebase(user!);
     } catch (e) {
@@ -22,8 +24,8 @@ class FirebaseAuthServices implements AuthBase {
   }
 
   @override
-  Future<AppUser?> signInAnonymously() async{
-    try{
+  Future<AppUser?> signInAnonymously() async {
+    try {
       UserCredential result = await _firebaseAuth.signInAnonymously();
       return _userFromFirebase(result.user);
     } catch (e) {
@@ -34,7 +36,7 @@ class FirebaseAuthServices implements AuthBase {
 
   @override
   Future<bool> signOut() async {
-    try{
+    try {
       await _firebaseAuth.signOut();
       return true;
     } catch (e) {
@@ -44,8 +46,24 @@ class FirebaseAuthServices implements AuthBase {
   }
 
   @override
-  Future<AppUser?> signInWithGoogle() {
-    // TODO: implement signInWithGoogle
-    throw UnimplementedError();
+  Future<AppUser?> signInWithGoogle() async {
+    GoogleSignIn _googleSignIn = GoogleSignIn();
+    GoogleSignInAccount? _googleUser = await _googleSignIn.signIn();
+
+    if (_googleUser != null) {
+      GoogleSignInAuthentication _googleAuth = await _googleUser.authentication;
+      if (_googleAuth.idToken != null && _googleAuth.accessToken != null) {
+        UserCredential result = await _firebaseAuth.signInWithCredential(
+            GoogleAuthProvider.credential(
+                idToken: _googleAuth.idToken,
+                accessToken: _googleAuth.accessToken));
+        User? _user = result.user;
+        return _userFromFirebase(_user);
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
   }
 }
