@@ -1,8 +1,9 @@
+import 'package:chat_with_me/pages/sign_in/email_password_signin_and_signup.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../viewmodel/user_view_model.dart';
-import '../widgets/social_login_button.dart';
+import '../../viewmodel/user_view_model.dart';
+import '../../widgets/social_login_button.dart';
 
 class SignIn extends StatelessWidget {
   void _signInAnonymously(BuildContext context) {
@@ -13,6 +14,12 @@ class SignIn extends StatelessWidget {
   void _signInWithGoogle(BuildContext context) {
     final _userViewModel = Provider.of<UserViewModel>(context, listen: false);
     _userViewModel.signInWithGoogle();
+  }
+
+  void _emailAndPasswordSignIn(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      fullscreenDialog: true,
+        builder: (context) => EmailPasswordSigninAndSignUp()));
   }
 
   @override
@@ -46,8 +53,8 @@ class SignIn extends StatelessWidget {
                 fontSize: 18,
               ),
               SocialLoginButton(
-                onPressed: () {},
-                buttonColor: Colors.purple,
+                onPressed: () => _emailAndPasswordSignIn(context),
+                buttonColor: Colors.cyan,
                 text: 'Login With Email and Password',
                 height: 50,
                 icon: const Icon(Icons.email),
@@ -66,5 +73,3 @@ class SignIn extends StatelessWidget {
         ));
   }
 }
-
-

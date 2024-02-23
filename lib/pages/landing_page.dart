@@ -1,4 +1,4 @@
-import 'package:chat_with_me/pages/sign_in.dart';
+import 'package:chat_with_me/pages/sign_in/sign_in.dart';
 import 'package:chat_with_me/viewmodel/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
