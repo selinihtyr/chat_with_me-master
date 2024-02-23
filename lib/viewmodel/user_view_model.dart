@@ -80,4 +80,10 @@ class UserViewModel with ChangeNotifier implements AuthBase{
       state = ViewState.IDLE;
     }
   }
+
+  @override
+  Future<AppUser?> signInWithEmailAndPassword(String email, String password) {
+    // TODO: implement signInWithEmailAndPassword
+    throw UnimplementedError();
+  }
 }

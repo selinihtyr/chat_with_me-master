@@ -22,4 +22,10 @@ class FakeAuthenticationService implements AuthBase {
   Future<AppUser?> signInWithGoogle() {
     return Future.value(AppUser(uid: userID));
   }
+
+  @override
+  Future<AppUser?> signInWithEmailAndPassword(String email, String password) {
+    // TODO: implement signInWithEmailAndPassword
+    throw UnimplementedError();
+  }
 }
