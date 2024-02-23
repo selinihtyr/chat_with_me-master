@@ -1,17 +1,12 @@
 import 'package:chat_with_me/model/user_app.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import '../services/auth_base.dart';
-import '../services/firebase_auth_services.dart';
-import '../services/locator.dart';
+import 'package:provider/provider.dart';
+import '../viewmodel/user_view_model.dart';
 
 class HomePage extends StatelessWidget {
-  final User user;
-  AuthBase authService = locator<FirebaseAuthServices>();
-  final VoidCallback onSignOut;
+  final AppUser user;
 
-  HomePage({super.key, required this.onSignOut ,required this.user});
+  HomePage({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +14,7 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () async {
-              _logout();
-            },
+            onPressed: () => _logout(context) ,
             icon: const Icon(Icons.exit_to_app),
           )
         ],
@@ -41,8 +34,9 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Future<void> _logout() async {
-    await authService.signOut();
-    onSignOut();
+  Future<bool> _logout(BuildContext context) async {
+    final _userViewModel = Provider.of<UserViewModel>(context, listen: false);
+    bool result = await _userViewModel.signOut();
+    return result;
   }
 }

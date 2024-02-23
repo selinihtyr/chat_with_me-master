@@ -39,4 +39,10 @@ class UserRepository implements AuthBase {
       return await _firebaseAuthServices.signOut();
     }
   }
+
+  @override
+  Future<AppUser?> signInWithGoogle() {
+    // TODO: implement signInWithGoogle
+    throw UnimplementedError();
+  }
 }

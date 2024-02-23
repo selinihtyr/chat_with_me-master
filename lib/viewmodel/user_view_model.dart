@@ -11,11 +11,17 @@ class UserViewModel with ChangeNotifier implements AuthBase{
   UserRepository _userRepository = locator<UserRepository>();
   AppUser? _user;
 
+  AppUser? get user => _user;
+
   ViewState get state => _state;
 
   set state(ViewState value) {
     _state = value;
     notifyListeners();
+  }
+
+  UserViewModel(){
+    currentUser();
   }
 
   @override
@@ -50,7 +56,9 @@ class UserViewModel with ChangeNotifier implements AuthBase{
   Future<bool> signOut() async{
     try {
       state = ViewState.BUSY;
-      return await _userRepository.signOut();
+      bool result = await _userRepository.signOut();
+      _user = null;
+      return result;
     } catch (e) {
       debugPrint("View Model Current User Hata: " + e.toString());
       return false;
@@ -59,5 +67,9 @@ class UserViewModel with ChangeNotifier implements AuthBase{
     }
   }
 
-
+  @override
+  Future<AppUser?> signInWithGoogle() {
+    // TODO: implement signInWithGoogle
+    throw UnimplementedError();
+  }
 }

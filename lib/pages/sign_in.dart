@@ -1,21 +1,13 @@
- import 'package:chat_with_me/services/auth_base.dart';
-import 'package:chat_with_me/services/fake_authentication_service.dart';
-import 'package:chat_with_me/services/locator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../viewmodel/user_view_model.dart';
 import '../widgets/social_login_button.dart';
 
 class SignIn extends StatelessWidget {
-  final Function(User) onSignIn;
-  AuthBase authService = locator<FakeAuthenticationService>();
-
-  SignIn({Key? key, required this.onSignIn}) : super(key: key);
-
-  void _signInAnonymously() async {
-    UserCredential userCredential =
-        await FirebaseAuth.instance.signInAnonymously();
-    onSignIn(userCredential.user!);
+  void _signInAnonymously(BuildContext context) {
+    final _userViewModel = Provider.of<UserViewModel>(context, listen: false);
+    _userViewModel.signInAnonymously();
   }
 
   @override
@@ -65,10 +57,7 @@ class SignIn extends StatelessWidget {
                 fontSize: 18,
               ),
               SocialLoginButton(
-                onPressed: () {
-                  print("Butona tıklandı");
-                  _signInAnonymously();
-                },
+                onPressed: () => _signInAnonymously(context),
                 buttonColor: Colors.grey,
                 text: 'Guest Login',
                 height: 50,
