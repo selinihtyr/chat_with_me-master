@@ -47,14 +47,6 @@ class SignIn extends StatelessWidget {
               ),
               SocialLoginButton(
                 onPressed: () {},
-                buttonColor: const Color(0xff334D92),
-                text: 'Login With Facebook',
-                height: 50,
-                icon: const Icon(Icons.email),
-                fontSize: 18,
-              ),
-              SocialLoginButton(
-                onPressed: () {},
                 buttonColor: Colors.purple,
                 text: 'Login With Email and Password',
                 height: 50,

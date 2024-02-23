@@ -16,36 +16,36 @@ class UserRepository implements AuthBase {
   @override
   Future<AppUser?> currentUser() async {
     if (appMode == AppMode.DEBUG)  {
-      return await _fakeAuthenticationService.currentUser();
-    } else {
       return await _firebaseAuthServices.currentUser();
+    } else {
+      return null;
     }
   }
 
   @override
   Future<AppUser?> signInAnonymously() async{
     if (appMode == AppMode.DEBUG) {
-      return await _fakeAuthenticationService.signInAnonymously();
-    } else {
       return await _firebaseAuthServices.signInAnonymously();
+    } else {
+      return null;
     }
   }
 
   @override
   Future<bool> signOut() async {
     if (appMode == AppMode.DEBUG) {
-      return await _fakeAuthenticationService.signOut();
-    } else {
       return await _firebaseAuthServices.signOut();
+    } else {
+      return false;
     }
   }
 
   @override
   Future<AppUser?> signInWithGoogle()async {
     if (appMode == AppMode.DEBUG) {
-      return await _fakeAuthenticationService.signInWithGoogle();
-    } else {
       return await _firebaseAuthServices.signInWithGoogle();
+    } else {
+      return null;
     }
   }
 }
