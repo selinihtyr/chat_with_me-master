@@ -29,14 +29,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(),
-      home: ChangeNotifierProvider(
-        create: (context) => UserViewModel(),
-        child: LandingPage(),
-      ),
+    return ChangeNotifierProvider(
+      create: (context) => UserViewModel(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(),
+        home: LandingPage(),
+        ),
     );
   }
 }

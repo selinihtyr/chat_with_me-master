@@ -82,8 +82,31 @@ class UserViewModel with ChangeNotifier implements AuthBase{
   }
 
   @override
-  Future<AppUser?> signInWithEmailAndPassword(String email, String password) {
-    // TODO: implement signInWithEmailAndPassword
-    throw UnimplementedError();
+  Future<AppUser?> signInWithEmailAndPassword(String email, String password) async {
+    try {
+      state = ViewState.BUSY;
+      _user = await _userRepository.signInWithEmailAndPassword(email, password);
+      return _user;
+    } catch (e) {
+      debugPrint("View Model Current User Hata: " + e.toString());
+      return null;
+    } finally {
+      state = ViewState.IDLE;
+    }
+  }
+
+  @override
+  Future<AppUser?> createUserWithEmailAndPassword(String email, String password)async {
+    try {
+      state = ViewState.BUSY;
+      _user =
+      await _userRepository.createUserWithEmailAndPassword(email, password);
+      return _user;
+    } catch (e) {
+      debugPrint("View Model Current User Hata: " + e.toString());
+      return null;
+    } finally {
+      state = ViewState.IDLE;
+    }
   }
 }

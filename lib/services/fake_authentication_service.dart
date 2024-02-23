@@ -28,4 +28,10 @@ class FakeAuthenticationService implements AuthBase {
     // TODO: implement signInWithEmailAndPassword
     throw UnimplementedError();
   }
+
+  @override
+  Future<AppUser?> createUserWithEmailAndPassword(String email, String password) {
+    // TODO: implement createUserWithEmailAndPassword
+    throw UnimplementedError();
+  }
 }
